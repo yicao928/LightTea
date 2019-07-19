@@ -11,7 +11,7 @@ public class PersonalItem {
     public PersonalItem(String name, String price){
         this.price = Float.valueOf(price);
         this.name = name;
-        member = MainActivity.findMemberByName(name);
+        member = MainActivity.memberList.findMemberByName(name);
     }
 
     public String getName(){

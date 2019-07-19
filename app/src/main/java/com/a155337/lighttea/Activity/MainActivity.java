@@ -1,5 +1,6 @@
 package com.a155337.lighttea.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,8 +18,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.a155337.lighttea.Helper.Constant;
+import com.a155337.lighttea.Helper.Helper;
 import com.a155337.lighttea.Object.Bill;
+import com.a155337.lighttea.Object.BillList;
 import com.a155337.lighttea.Object.Member;
+import com.a155337.lighttea.Object.MemberList;
 import com.a155337.lighttea.R;
 
 import java.io.Serializable;
@@ -33,17 +38,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Button addBillButton;
     private Button settleBillsButton;
 
-    private static List<Member> memberlist;
-    public static List<Bill> billList;
-    private float total;
+    public static BillList billList;
+    public static MemberList memberList;
     private String firstDate;
 
+
     SharedPreferences settings;
-    private static final String FIRST_RUN = "first run";
-    private static final String TOTAL_SPEDNING = "total spending";
-    private static final String FIRST_DATE = "first date";
-    private static final int REQUEST_NEW_BILL = 1;
-    private static final int REQUEST_NEW_Member = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //Add new member!!!!!
             //TODO
             Intent intent = new Intent(MainActivity.this, AddMember.class);
-            startActivityForResult(intent, REQUEST_NEW_Member);
+            startActivityForResult(intent, Constant.REQUEST_NEW_Member);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_tools) {
@@ -136,22 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public static Member findMemberByName(String name){
-        for( Member i: memberlist){
-            if(i.getName().equals(name))
-                return i;
-        }
-        return null;
-    }
-
-    public static String[] getNameList(){
-        String[] nameList = new String[memberlist.size()];
-        for(int i = 0; i < memberlist.size(); i++){
-            nameList[i] = memberlist.get(i).getName();
-        }
-        return nameList;
-    }
-
     private void initViewsAndData(){
         dateTextView = findViewById(R.id.dateTextView);
         totalSpending = findViewById(R.id.totalSpending);
@@ -159,12 +143,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         addBillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(memberlist.size() != 0){
+                if(memberList.size() != 0){
                     Intent intent = new Intent(MainActivity.this, AddBillActivity.class);
-                    startActivityForResult(intent, REQUEST_NEW_BILL);
+                    startActivityForResult(intent, Constant.REQUEST_NEW_BILL);
                 }
                 else{
-                    showMessage("Please add a member first");
+                    Helper.showMessage("Please add a member first", MainActivity.this);
                 }
             }
         });
@@ -177,28 +161,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         if(firstRun())
             firstTimeInit();
-        dateTextView.setText(settings.getString(FIRST_DATE, "00-00-00"));
-        totalSpending.setText(String.valueOf(settings.getFloat(TOTAL_SPEDNING, 0.0f)));
-        memberlist = new ArrayList<>();//Todo
-        billList = new ArrayList<>();//Todo
+        dateTextView.setText(settings.getString(Constant.FIRST_DATE, "00-00-00"));
+        totalSpending.setText(String.valueOf(settings.getFloat(Constant.TOTAL_SPEDNING, 0.0f)));
+        memberList = new MemberList();//Todo
+        billList = new BillList();//Todo
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(data == null)
+            return;
         Bundle bundle = data.getExtras();
         switch (resultCode){
-            case REQUEST_NEW_BILL:
+            case Constant.REQUEST_NEW_BILL:
                 Bill newBill = (Bill)bundle.getSerializable("new bill");
                 billList.add(newBill);
-                total = total + newBill.getFloatTotal();
-                settings.edit().putFloat(TOTAL_SPEDNING, total).commit();
-                totalSpending.setText(String.valueOf(total));
-                showMessage("Success");
+                billList.increaseTotalBy(newBill.getFloatTotal());
+                totalSpending.setText(String.valueOf(billList.getTotal()));
+                Helper.showMessage("Success", MainActivity.this);
                 break;
-            case REQUEST_NEW_Member:
+            case Constant.REQUEST_NEW_Member:
                 Member newMember = (Member)bundle.getSerializable("new member");
-                memberlist.add(newMember);
-                showMessage("Success");
+                memberList.add(newMember);
+                Helper.showMessage("Success", MainActivity.this);
                 break;
         }
     }
@@ -208,23 +193,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = simpleDateFormat.format(date);
         currentDate = currentDate.substring(2);
-        total = 0.0f;
         firstDate = currentDate;
-        settings.edit().putString(FIRST_DATE, firstDate).commit();
-        settings.edit().putFloat(TOTAL_SPEDNING, total).commit();
-        memberlist = new ArrayList<>();
-        billList = new ArrayList<>();
+        settings.edit().putString(Constant.FIRST_DATE, firstDate).commit();
+        memberList = new MemberList();
+        billList = new BillList();
     }
 
     private boolean firstRun() {
-        if(settings.getBoolean(FIRST_RUN, true)){
-            settings.edit().putBoolean(FIRST_RUN, false).commit();
+        if(settings.getBoolean(Constant.FIRST_RUN, true)){
+            settings.edit().putBoolean(Constant.FIRST_RUN, false).commit();
             return true;
         }
         return false;
     }
 
-    private void showMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
 }

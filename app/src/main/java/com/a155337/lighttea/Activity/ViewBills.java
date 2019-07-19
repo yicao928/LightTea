@@ -10,6 +10,8 @@ import com.a155337.lighttea.R;
 
 import java.util.List;
 
+import static com.a155337.lighttea.Activity.MainActivity.billList;
+
 public class ViewBills extends AppCompatActivity {
     private ListView allBillsList;
     private SingleBillAdapter adapter;
@@ -20,7 +22,7 @@ public class ViewBills extends AppCompatActivity {
         setContentView(R.layout.activity_view_bills);
 
         allBillsList = findViewById(R.id.allBillsList);
-        adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, MainActivity.billList);
+        adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, billList.getAllBills());
         allBillsList = findViewById(R.id.allBillsList);
         allBillsList.setAdapter(adapter);
     }

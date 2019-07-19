@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.a155337.lighttea.Helper.Helper;
 import com.a155337.lighttea.Object.Bill;
 import com.a155337.lighttea.Object.Member;
 import com.a155337.lighttea.Object.PersonalItem;
@@ -20,6 +21,8 @@ import com.a155337.lighttea.R;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.a155337.lighttea.Activity.MainActivity.memberList;
 
 public class AddBillActivity extends AppCompatActivity {
     private ArrayList<PersonalItem> personalItemList;
@@ -49,7 +52,7 @@ public class AddBillActivity extends AppCompatActivity {
         personalItemListView = findViewById(R.id.personalItemListView);
         personalItemListView.setAdapter(adapter);
 
-        nameList = MainActivity.getNameList();
+        nameList = memberList.getNameList();
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, nameList);
         paidPersonSpinner = findViewById(R.id.paidPersonSpinner);
         paidPersonSpinner.setAdapter(nameAdapter);
@@ -63,13 +66,13 @@ public class AddBillActivity extends AppCompatActivity {
         addPersonalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isFloat(amountEditText.getText().toString())){
+                if(Helper.isFloat(amountEditText.getText().toString())){
                     PersonalItem newPersonalItem = new PersonalItem(nameSpinner.getSelectedItem().toString(), amountEditText.getText().toString());
                     personalItemList.add(newPersonalItem);
                     personalItemListView.setAdapter(adapter);
                 }
                 else{
-                    showMessage("Please enter valid number");
+                    Helper.showMessage("Please enter valid number", AddBillActivity.this);
                 }
             }
         });
@@ -90,38 +93,18 @@ public class AddBillActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isFloat(String s){
-        if(s == null || s.equals(""))
-            return false;
-        for(int i = 0; i < s.length(); i++){
-            int decimalPoint = 0;
-            if(!Character.isDigit(s.charAt(i)) && s.charAt(i) != '.'){
-                return false;
-            }
-            else if(s.charAt(i) == '.'){
-                decimalPoint++;
-                if(decimalPoint > 1)
-                    return false;
-            }
-        }
-        return true;
-    }
-
     private boolean createBill(){
-        if(isFloat(totalEditText.getText().toString())){
+        if(Helper.isFloat(totalEditText.getText().toString())){
             float total = Float.valueOf(totalEditText.getText().toString());
-            Member paidPerson = MainActivity.findMemberByName(paidPersonSpinner.getSelectedItem().toString());
+            Member paidPerson = memberList.findMemberByName(paidPersonSpinner.getSelectedItem().toString());
             Date date = new Date(System.currentTimeMillis());
             newBill = new Bill(paidPerson, total, date, personalItemList);
             return true;
         }
         else{
-            showMessage("Please enter valid number");
+            Helper.showMessage("Please enter valid number", AddBillActivity.this);
             return false;
         }
     }
 
-    private void showMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
 }
