@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         settleBillsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //TODO
             }
         });
         if(firstRun())

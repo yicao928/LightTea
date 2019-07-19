@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.a155337.lighttea.Helper.Helper;
 import com.a155337.lighttea.Object.Member;
 import com.a155337.lighttea.R;
+
+import static com.a155337.lighttea.Activity.MainActivity.memberList;
 
 public class AddMember extends AppCompatActivity {
     private EditText name;
@@ -24,6 +27,10 @@ public class AddMember extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(memberList.findMemberByName(name.getText().toString()) != null){
+                    Helper.showMessage("Already Exist", AddMember.this);
+                    return;
+                }
                 Member newMember = new Member(name.getText().toString());
                 Intent result = new Intent(AddMember.this, MainActivity.class);
                 Bundle bundle=new Bundle();

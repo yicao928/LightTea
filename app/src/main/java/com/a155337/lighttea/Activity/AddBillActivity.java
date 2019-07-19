@@ -37,13 +37,14 @@ public class AddBillActivity extends AppCompatActivity {
 
     private String[] nameList;
     private Bill newBill;
+    private float personalItemTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_bill);
         initViews();
-
+        personalItemTotal = 0.0f;
     }
 
     private void initViews(){
@@ -70,6 +71,7 @@ public class AddBillActivity extends AppCompatActivity {
                     PersonalItem newPersonalItem = new PersonalItem(nameSpinner.getSelectedItem().toString(), amountEditText.getText().toString());
                     personalItemList.add(newPersonalItem);
                     personalItemListView.setAdapter(adapter);
+                    personalItemTotal = personalItemTotal + newPersonalItem.getPersonalTotal();
                 }
                 else{
                     Helper.showMessage("Please enter valid number", AddBillActivity.this);
@@ -96,6 +98,10 @@ public class AddBillActivity extends AppCompatActivity {
     private boolean createBill(){
         if(Helper.isFloat(totalEditText.getText().toString())){
             float total = Float.valueOf(totalEditText.getText().toString());
+            if(total < personalItemTotal){
+                Helper.showMessage("Person item total is greater than bill total", AddBillActivity.this);
+                return false;
+            }
             Member paidPerson = memberList.findMemberByName(paidPersonSpinner.getSelectedItem().toString());
             Date date = new Date(System.currentTimeMillis());
             newBill = new Bill(paidPerson, total, date, personalItemList);

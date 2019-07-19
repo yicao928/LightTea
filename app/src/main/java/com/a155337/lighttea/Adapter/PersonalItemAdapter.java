@@ -26,7 +26,7 @@ public class PersonalItemAdapter extends ArrayAdapter {
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView price = (TextView) view.findViewById(R.id.price);
         name.setText(personalItem.getName());
-        price.setText(String.valueOf(personalItem.getPrice()));
+        price.setText(String.valueOf(personalItem.getPersonalTotal()));
         return view;
     }
 
