@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.a155337.lighttea.Activity.MainActivity.memberList;
+
 public class Bill implements Serializable {
     private Date date;
     private float total;
@@ -35,5 +37,15 @@ public class Bill implements Serializable {
 
     public float getFloatTotal(){
         return total;
+    }
+
+    public void assignBalance(){
+        paidPerson.increaseBalance(total);
+        float totalWithoutPersonalItem = total;
+        for(PersonalItem i: personalItems){
+            totalWithoutPersonalItem = totalWithoutPersonalItem - i.getPersonalTotal();
+            i.getMember().decreaseBalance(i.getPersonalTotal());
+        }
+        memberList.decreaseBalanceForAll(totalWithoutPersonalItem);
     }
 }

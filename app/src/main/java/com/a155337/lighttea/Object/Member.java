@@ -15,4 +15,16 @@ public class Member implements Serializable {
     public String getName(){
         return name;
     }
+
+    public void setBalance(float newBalance){
+        balance = newBalance;
+    }
+
+    public void increaseBalance(float increaseAmount){
+        balance = balance + increaseAmount;
+    }
+
+    public void decreaseBalance(float decreaseAmount){
+        balance = balance - decreaseAmount;
+    }
 }

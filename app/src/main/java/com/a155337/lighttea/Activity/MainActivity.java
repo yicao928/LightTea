@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (resultCode){
             case Constant.REQUEST_NEW_BILL:
                 Bill newBill = (Bill)bundle.getSerializable("new bill");
+                newBill.assignBalance();
                 billList.add(newBill);
                 billList.increaseTotalBy(newBill.getFloatTotal());
                 totalSpending.setText(String.valueOf(billList.getTotal()));

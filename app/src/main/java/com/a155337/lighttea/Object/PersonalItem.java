@@ -25,4 +25,8 @@ public class PersonalItem implements Serializable {
     public float getPersonalTotal(){
         return personalTotal;
     }
+
+    public Member getMember(){
+        return member;
+    }
 }

@@ -32,4 +32,17 @@ public class MemberList {
     public void add(Member newMember){
         allMembers.add(newMember);
     }
+
+    public void decreaseBalanceForAll(float total){
+        float average = total / this.size();
+        for(Member i: allMembers){
+            i.decreaseBalance(average);
+        }
+    }
+
+    public void clearBalance(){
+        for(Member i: allMembers){
+            i.setBalance(0);
+        }
+    }
 }
