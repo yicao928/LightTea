@@ -14,7 +14,7 @@ import com.a155337.lighttea.R;
 
 import java.util.List;
 
-public class SingleBillAdapter extends ArrayAdapter {
+public class SingleBillAdapter extends ArrayAdapter{
     private final int resourceId;
 
     public SingleBillAdapter(Context context, int textViewResourceId, List<Bill> objects) {
@@ -34,4 +34,5 @@ public class SingleBillAdapter extends ArrayAdapter {
         payer.setText(bill.getPaidPerson());
         return view;
     }
+    
 }
