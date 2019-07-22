@@ -26,4 +26,14 @@ public class BillList {
     public float getTotal(){
         return total;
     }
+
+    public Bill getBill(int index){
+        return allBills.get(index);
+    }
+
+    public void replace(int position, Bill newBill){
+        Bill oldBill = allBills.get(position);
+        oldBill.setTotal(newBill.getFloatTotal());
+        oldBill.setPaidPerson(newBill.getPaidPersonMember());
+    }
 }

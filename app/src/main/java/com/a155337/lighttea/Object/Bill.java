@@ -8,7 +8,7 @@ import java.util.Date;
 import static com.a155337.lighttea.Activity.MainActivity.memberList;
 
 public class Bill implements Serializable {
-    private Date date;
+    public Date date;
     private float total;
     private Member paidPerson;
     private ArrayList<com.a155337.lighttea.Object.PersonalItem> personalItems;
@@ -31,6 +31,10 @@ public class Bill implements Serializable {
         return paidPerson.getName();
     }
 
+    public Member getPaidPersonMember(){
+        return paidPerson;
+    }
+
     public String getTotal(){
         return String.valueOf(total);
     }
@@ -47,5 +51,17 @@ public class Bill implements Serializable {
             i.getMember().decreaseBalance(i.getPersonalTotal());
         }
         memberList.decreaseBalanceForAll(totalWithoutPersonalItem);
+    }
+
+    public ArrayList<PersonalItem> getPersonalItems(){
+        return personalItems;
+    }
+
+    public void setTotal(float newttotal){
+        total = newttotal;
+    }
+
+    public void setPaidPerson(Member newPaidPerson){
+        paidPerson = newPaidPerson;
     }
 }

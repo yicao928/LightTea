@@ -1,6 +1,5 @@
 package com.a155337.lighttea.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.a155337.lighttea.Helper.Constant;
 import com.a155337.lighttea.Helper.Helper;
@@ -26,15 +24,12 @@ import com.a155337.lighttea.Object.Member;
 import com.a155337.lighttea.Object.MemberList;
 import com.a155337.lighttea.R;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView dateTextView;
-    private TextView totalSpending;
+    private static TextView totalSpending;
     private Button addBillButton;
     private Button settleBillsButton;
 
@@ -53,9 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(firstRun()){
             firstTimeInit();
         }
-        else{
-            initViewsAndData();
-        }
+        initViewsAndData();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 //        FloatingActionButton fab = findViewById(R.id.fab);
@@ -139,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initViewsAndData(){
         dateTextView = findViewById(R.id.dateTextView);
         totalSpending = findViewById(R.id.totalSpending);
-        addBillButton = findViewById(R.id.addBillButton);
+        addBillButton = findViewById(R.id.editBillButton);
         addBillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,6 +199,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
         return false;
+    }
+
+    public static void updateTotal(){
+        float newTotal = 0;
+        for(Bill i: billList.getAllBills()){
+            newTotal = newTotal + i.getFloatTotal();
+        }
+        totalSpending.setText(String.valueOf(newTotal));
     }
 
 }
