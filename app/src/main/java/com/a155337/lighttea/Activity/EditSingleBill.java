@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,8 +22,9 @@ import com.a155337.lighttea.R;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static com.a155337.lighttea.Activity.MainActivity.billList;
 import static com.a155337.lighttea.Activity.MainActivity.memberList;
-
+//reutrn  a new bill to replace the old bill
 public class EditSingleBill extends AppCompatActivity {
     private ArrayList<PersonalItem> personalItemList;
     private Button editBillButton;
@@ -36,6 +38,7 @@ public class EditSingleBill extends AppCompatActivity {
     private float personalItemTotal;
 
     private Bill billToEdit;
+    int positionToEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,18 @@ public class EditSingleBill extends AppCompatActivity {
         adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemList);
         personalItemListView = findViewById(R.id.personalItemListView);
         personalItemListView.setAdapter(adapter);
+        personalItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                positionToEdit = position;
+                Bill onClickeBill = billList.getBill(position);
+                Intent intent = new Intent(EditSingleBill.this, EditSinglePersonalItem.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constant.PERSONAL_TO_EDIT, onClickeBill);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, Constant.NEW_EDIT_PERSONAL_ITEM);
+            }
+        });
 
         nameList = memberList.getNameList();
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, nameList);

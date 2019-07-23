@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.EditSingleBill"></activity>
+        <activity android:name=".Activity.EditSinglePersonalItem"></activity>
+        <activity android:name=".Activity.EditSingleBill" />
         <activity android:name=".Activity.AddMember" />
         <activity android:name=".Activity.ViewBills" />
         <activity android:name=".Activity.AddBillActivity" />
