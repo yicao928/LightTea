@@ -63,7 +63,7 @@ public class AddBillActivity extends AppCompatActivity {
         totalEditText = findViewById(R.id.totalEditText);
         amountEditText = findViewById(R.id.amountEditText);
 
-        addPersonalButton = findViewById(R.id.addPersonalButton);
+        addPersonalButton = findViewById(R.id.editPersonalButton);
         addBillButton = findViewById(R.id.editBillButton);
 
     }

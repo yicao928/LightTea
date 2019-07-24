@@ -56,18 +56,6 @@ public class EditSingleBill extends AppCompatActivity {
         adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemList);
         personalItemListView = findViewById(R.id.personalItemListView);
         personalItemListView.setAdapter(adapter);
-        personalItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                positionToEdit = position;
-                Bill onClickeBill = billList.getBill(position);
-                Intent intent = new Intent(EditSingleBill.this, EditSinglePersonalItem.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.PERSONAL_TO_EDIT, onClickeBill);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, Constant.NEW_EDIT_PERSONAL_ITEM);
-            }
-        });
 
         nameList = memberList.getNameList();
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, nameList);
@@ -81,7 +69,7 @@ public class EditSingleBill extends AppCompatActivity {
 
     }
 
-    public void setOnClickerListener(){
+    private void setOnClickerListener(){
         editBillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +81,19 @@ public class EditSingleBill extends AppCompatActivity {
                     setResult(Constant.NEW_EDIT_BILL, result);
                     finish();
                 }
+            }
+        });
+
+        personalItemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                positionToEdit = position;
+                PersonalItem personalItemToEdit = billToEdit.getPersonalItems().get(position);
+                Intent intent = new Intent(EditSingleBill.this, EditSinglePersonalItem.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constant.PERSONAL_TO_EDIT, personalItemToEdit);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, Constant.NEW_EDIT_PERSONAL_ITEM);
             }
         });
     }
@@ -113,5 +114,14 @@ public class EditSingleBill extends AppCompatActivity {
             Helper.showMessage("Please enter valid number", EditSingleBill.this);
             return false;
         }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        Bundle bundle = data.getExtras();
+        PersonalItem newPersonalItem = (PersonalItem)bundle.getSerializable(Constant.PERSONAL_TO_EDIT);
+        billToEdit.replacePersonItem(positionToEdit, newPersonalItem);
+
+        adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemList);
+        personalItemListView.setAdapter(adapter);
     }
 }

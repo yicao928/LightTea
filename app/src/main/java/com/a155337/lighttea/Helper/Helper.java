@@ -11,8 +11,8 @@ public class Helper {
     public static boolean isFloat(String s){
         if(s == null || s.equals(""))
             return false;
+        int decimalPoint = 0;
         for(int i = 0; i < s.length(); i++){
-            int decimalPoint = 0;
             if(!Character.isDigit(s.charAt(i)) && s.charAt(i) != '.'){
                 return false;
             }

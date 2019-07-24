@@ -20,6 +20,12 @@ public class Bill implements Serializable {
         this.personalItems = personalItems;
     }
 
+    public void replacePersonItem(int position, PersonalItem newPersonalItem){
+        PersonalItem oldPersonalItem = personalItems.get(position);
+        oldPersonalItem.setName(newPersonalItem.getName());
+        oldPersonalItem.setPersonalTotal(newPersonalItem.getPersonalTotal());
+    }
+
     public String getDate(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String shorterDate = simpleDateFormat.format(date);

@@ -111,7 +111,7 @@
         app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
     <Button
-        android:id="@+id/addPersonalButton"
+        android:id="@+id/editPersonalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -131,7 +131,7 @@
         app:layout_constraintBottom_toTopOf="@+id/editBillButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addPersonalButton" />
+        app:layout_constraintTop_toBottomOf="@+id/editPersonalButton" />
 
     <Button
         android:id="@+id/editBillButton"
