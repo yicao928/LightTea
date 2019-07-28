@@ -1,8 +1,9 @@
 package com.a155337.lighttea.Object;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BillList {
+public class BillList implements Serializable {
     private ArrayList<Bill> allBills;
     private float total;
 

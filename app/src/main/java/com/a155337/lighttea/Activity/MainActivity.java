@@ -3,6 +3,7 @@ package com.a155337.lighttea.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +25,13 @@ import com.a155337.lighttea.Object.Member;
 import com.a155337.lighttea.Object.MemberList;
 import com.a155337.lighttea.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -158,6 +166,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         totalSpending.setText(String.valueOf(settings.getFloat(Constant.TOTAL_SPEDNING, 0.0f)));
         memberList = new MemberList();//Todo
         billList = new BillList();//Todo
+        try{
+            FileInputStream fis = openFileInput("MemberList.txt");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            memberList = (MemberList) ois.readObject();
+            fis = openFileInput("BillList.txt");
+            ois = new ObjectInputStream(fis);
+            billList = (BillList) ois.readObject();
+            ois.close();
+        }catch (Exception e){
+
+        }
     }
 
     @Override
@@ -172,11 +191,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 billList.add(newBill);
                 billList.increaseTotalBy(newBill.getFloatTotal());
                 totalSpending.setText(String.valueOf(billList.getTotal()));
+                try{
+                    FileOutputStream fos = openFileOutput("BillList.txt", MODE_PRIVATE);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(billList);
+                    oos.close();
+                }catch (Exception e){
+                    Helper.showMessage("Something Wrong", this);
+                }
                 Helper.showMessage("Success", MainActivity.this);
                 break;
             case Constant.REQUEST_NEW_Member:
                 Member newMember = (Member)bundle.getSerializable("new member");
                 memberList.add(newMember);
+                try{
+                    FileOutputStream fos = openFileOutput("MemberList.txt", MODE_PRIVATE);
+                    ObjectOutputStream oos = new ObjectOutputStream(fos);
+                    oos.writeObject(memberList);
+                    oos.close();
+                }catch (Exception e){
+                    Helper.showMessage("Something Wrong", this);
+                }
                 Helper.showMessage("Success", MainActivity.this);
                 break;
         }
@@ -191,6 +226,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         settings.edit().putString(Constant.FIRST_DATE, firstDate).commit();
         memberList = new MemberList();
         billList = new BillList();
+        try{
+            FileOutputStream fos = openFileOutput("MemberList.txt", MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(memberList);
+            fos = openFileOutput("BillList.txt", MODE_PRIVATE);
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(billList);
+            oos.close();
+        }catch (Exception e){
+            Helper.showMessage("Initialize Fail", this);
+        }
     }
 
     private boolean firstRun() {

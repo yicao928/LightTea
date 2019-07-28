@@ -1,8 +1,9 @@
 package com.a155337.lighttea.Object;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MemberList {
+public class MemberList implements Serializable {
     ArrayList<Member> allMembers;
 
     public MemberList(){
