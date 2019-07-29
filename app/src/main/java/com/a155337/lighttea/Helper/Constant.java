@@ -13,4 +13,6 @@ public class Constant {
     public static final int NEW_EDIT_BILL = 3;
     public static final int NEW_EDIT_PERSONAL_ITEM = 4;
     public static final String PERSONAL_TO_EDIT = "personal item to edit";
+    public static final int NO_CHANGE = 5;
+    public static final int UPDATE_BILL_LIST = 6;
 }

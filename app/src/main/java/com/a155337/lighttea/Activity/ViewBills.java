@@ -21,11 +21,13 @@ public class ViewBills extends AppCompatActivity {
     private ListView allBillsList;
     private SingleBillAdapter adapter;
     private int positionToEdit;
+    private int returnResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_bills);
+        returnResult = Constant.NO_CHANGE;
 
         allBillsList = findViewById(R.id.allBillsList);
         adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, billList.getAllBills());
@@ -52,5 +54,12 @@ public class ViewBills extends AppCompatActivity {
         adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, billList.getAllBills());
         allBillsList.setAdapter(adapter);
         MainActivity.updateTotal();
+        returnResult = Constant.UPDATE_BILL_LIST;
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(returnResult);
+        finish();
     }
 }
