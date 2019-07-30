@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String firstDate;
 
 
-    SharedPreferences settings;
+    private static SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,14 +154,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 //TODO
+                memberList.clearBalance();
+                billList.assignBalanceForAll();
             }
         });
         if(firstRun())
             firstTimeInit();
         dateTextView.setText(settings.getString(Constant.FIRST_DATE, "00-00-00"));
         totalSpending.setText(String.valueOf(settings.getFloat(Constant.TOTAL_SPEDNING, 0.0f)));
-        memberList = new MemberList();//Todo
-        billList = new BillList();//Todo
+        memberList = new MemberList();
+        billList = new BillList();
         try{
             FileInputStream fis = openFileInput("MemberList.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -171,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             billList = (BillList) ois.readObject();
             ois.close();
         }catch (Exception e){
+            Helper.showMessage("Init Fail", this);
         }
     }
 
@@ -183,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return;
                 bundle = data.getExtras();
                 Bill newBill = (Bill)bundle.getSerializable("new bill");
-                newBill.assignBalance();
                 billList.add(newBill);
                 billList.increaseTotalBy(newBill.getFloatTotal());
                 totalSpending.setText(String.valueOf(billList.getTotal()));
@@ -201,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case Constant.UPDATE_BILL_LIST:
                 updateBillList();
+                updateTotal();
                 break;
 
         }
@@ -233,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             newTotal = newTotal + i.getFloatTotal();
         }
         totalSpending.setText(String.valueOf(newTotal));
+        settings.edit().putFloat(Constant.TOTAL_SPEDNING, newTotal).commit();
     }
 
     public void updateMemberList(){

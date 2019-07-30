@@ -51,9 +51,9 @@ public class Bill implements Serializable {
 
     public void assignBalance(){
         paidPerson.increaseBalance(total);
-        float totalWithoutPersonalItem = total;
+        float totalWithoutPersonalItem = 0;
         for(PersonalItem i: personalItems){
-            totalWithoutPersonalItem = totalWithoutPersonalItem - i.getPersonalTotal();
+            totalWithoutPersonalItem = totalWithoutPersonalItem + i.getPersonalTotal();
             i.getMember().decreaseBalance(i.getPersonalTotal());
         }
         memberList.decreaseBalanceForAll(totalWithoutPersonalItem);
