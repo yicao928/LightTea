@@ -16,6 +16,10 @@ public class Member implements Serializable {
         return name;
     }
 
+    public float getBalance(){
+        return balance;
+    }
+
     public void setBalance(float newBalance){
         balance = newBalance;
     }

@@ -2,6 +2,7 @@ package com.a155337.lighttea.Object;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MemberList implements Serializable {
     ArrayList<Member> allMembers;
@@ -45,5 +46,9 @@ public class MemberList implements Serializable {
         for(Member i: allMembers){
             i.setBalance(0);
         }
+    }
+
+    public List<Member> getAllMembers(){
+        return allMembers;
     }
 }

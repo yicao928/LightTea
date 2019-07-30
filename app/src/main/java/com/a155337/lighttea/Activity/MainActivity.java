@@ -119,7 +119,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, AddMember.class);
             startActivityForResult(intent, Constant.REQUEST_NEW_Member);
         } else if (id == R.id.nav_slideshow) {
-
+            Intent intent = new Intent(MainActivity.this, ViewMembers.class);
+            startActivity(intent);
         } else if (id == R.id.nav_tools) {
 
         } else if (id == R.id.nav_share) {

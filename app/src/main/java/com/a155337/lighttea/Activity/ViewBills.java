@@ -31,7 +31,6 @@ public class ViewBills extends AppCompatActivity {
 
         allBillsList = findViewById(R.id.allBillsList);
         adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, billList.getAllBills());
-        allBillsList = findViewById(R.id.allBillsList);
         allBillsList.setAdapter(adapter);
         allBillsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
