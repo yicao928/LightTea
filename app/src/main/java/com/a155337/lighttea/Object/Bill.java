@@ -10,10 +10,10 @@ import static com.a155337.lighttea.Activity.MainActivity.memberList;
 public class Bill implements Serializable {
     public Date date;
     private float total;
-    private Member paidPerson;
+    private String paidPerson;
     private ArrayList<com.a155337.lighttea.Object.PersonalItem> personalItems;
 
-    public Bill(Member paidPerson, float total, Date date, ArrayList<PersonalItem> personalItems){
+    public Bill(String paidPerson, float total, Date date, ArrayList<PersonalItem> personalItems){
         this.paidPerson = paidPerson;
         this.total = total;
         this.date = date;
@@ -34,11 +34,11 @@ public class Bill implements Serializable {
     }
 
     public String getPaidPerson(){
-        return paidPerson.getName();
+        return paidPerson;
     }
 
     public Member getPaidPersonMember(){
-        return paidPerson;
+        return memberList.findMemberByName(paidPerson);
     }
 
     public String getTotal(){
@@ -50,10 +50,10 @@ public class Bill implements Serializable {
     }
 
     public void assignBalance(){
-        paidPerson.increaseBalance(total);
-        float totalWithoutPersonalItem = 0;
+        memberList.findMemberByName(paidPerson).increaseBalance(total);
+        float totalWithoutPersonalItem = total;
         for(PersonalItem i: personalItems){
-            totalWithoutPersonalItem = totalWithoutPersonalItem + i.getPersonalTotal();
+            totalWithoutPersonalItem = totalWithoutPersonalItem - i.getPersonalTotal();
             i.getMember().decreaseBalance(i.getPersonalTotal());
         }
         memberList.decreaseBalanceForAll(totalWithoutPersonalItem);
@@ -67,7 +67,7 @@ public class Bill implements Serializable {
         total = newttotal;
     }
 
-    public void setPaidPerson(Member newPaidPerson){
+    public void setPaidPerson(String newPaidPerson){
         paidPerson = newPaidPerson;
     }
 }

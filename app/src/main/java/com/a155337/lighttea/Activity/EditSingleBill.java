@@ -105,7 +105,7 @@ public class EditSingleBill extends AppCompatActivity {
                 Helper.showMessage("Person item total is greater than bill total", EditSingleBill.this);
                 return false;
             }
-            Member paidPerson = memberList.findMemberByName(paidPersonSpinner.getSelectedItem().toString());
+            String paidPerson = paidPersonSpinner.getSelectedItem().toString();
             Date date = billToEdit.date;
             newBill = new Bill(paidPerson, total, date, personalItemList);
             return true;

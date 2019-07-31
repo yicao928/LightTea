@@ -105,7 +105,7 @@ public class AddBillActivity extends AppCompatActivity {
                 Helper.showMessage("Person item total is greater than bill total", AddBillActivity.this);
                 return false;
             }
-            Member paidPerson = memberList.findMemberByName(paidPersonSpinner.getSelectedItem().toString());
+            String paidPerson = paidPersonSpinner.getSelectedItem().toString();
             Date date = new Date(System.currentTimeMillis());
             newBill = new Bill(paidPerson, total, date, personalItemList);
             return true;

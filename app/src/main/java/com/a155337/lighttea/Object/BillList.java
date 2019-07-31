@@ -35,7 +35,7 @@ public class BillList implements Serializable {
     public void replace(int position, Bill newBill){
         Bill oldBill = allBills.get(position);
         oldBill.setTotal(newBill.getFloatTotal());
-        oldBill.setPaidPerson(newBill.getPaidPersonMember());
+        oldBill.setPaidPerson(newBill.getPaidPerson());
     }
 
     public void assignBalanceForAll(){
