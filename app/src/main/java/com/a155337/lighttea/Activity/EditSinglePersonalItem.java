@@ -14,6 +14,7 @@ import com.a155337.lighttea.Object.PersonalItem;
 import com.a155337.lighttea.R;
 
 import static com.a155337.lighttea.Activity.MainActivity.memberList;
+import static com.a155337.lighttea.Activity.MainActivity.personalItemList;
 
 public class EditSinglePersonalItem extends AppCompatActivity {
     private Spinner nameSpinner;
@@ -21,6 +22,7 @@ public class EditSinglePersonalItem extends AppCompatActivity {
     private EditText amountEditText;
 
     private String[] nameList;
+    String editID;
     PersonalItem personalItemToEdit;
 
     @Override
@@ -29,7 +31,8 @@ public class EditSinglePersonalItem extends AppCompatActivity {
         setContentView(R.layout.activity_edit_single_personal_item);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        personalItemToEdit = (PersonalItem) bundle.getSerializable(Constant.PERSONAL_TO_EDIT);
+        editID = bundle.getString(Constant.PERSONAL_TO_EDIT);
+        personalItemToEdit = personalItemList.findPersonalItemByID(editID);
         initViews();
         setOnClickListener();
     }

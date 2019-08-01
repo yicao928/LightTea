@@ -22,6 +22,8 @@ import com.a155337.lighttea.Object.Bill;
 import com.a155337.lighttea.Object.BillList;
 import com.a155337.lighttea.Object.Member;
 import com.a155337.lighttea.Object.MemberList;
+import com.a155337.lighttea.Object.PersonalItem;
+import com.a155337.lighttea.Object.PersonalItemList;
 import com.a155337.lighttea.R;
 
 import java.io.FileInputStream;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static BillList billList;
     public static MemberList memberList;
+    public static PersonalItemList personalItemList;
     private String firstDate;
 
 
@@ -165,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         totalSpending.setText(String.valueOf(settings.getFloat(Constant.TOTAL_SPEDNING, 0.0f)));
         memberList = new MemberList();
         billList = new BillList();
+        personalItemList = new PersonalItemList();
         try{
             FileInputStream fis = openFileInput("MemberList.txt");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -172,6 +176,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fis = openFileInput("BillList.txt");
             ois = new ObjectInputStream(fis);
             billList = (BillList) ois.readObject();
+            fis = openFileInput("PersonalItemList.txt");
+            ois = new ObjectInputStream(fis);
+            personalItemList = (PersonalItemList) ois.readObject();
             ois.close();
         }catch (Exception e){
             Helper.showMessage("Init Fail", this);
@@ -219,8 +226,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         settings.edit().putString(Constant.FIRST_DATE, firstDate).commit();
         memberList = new MemberList();
         billList = new BillList();
+        personalItemList = new PersonalItemList();
         updateMemberList();
         updateBillList();
+        updatePersonalItemList();
     }
 
     private boolean firstRun() {
@@ -256,6 +265,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             FileOutputStream fos = openFileOutput("BillList.txt", MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(billList);
+            oos.close();
+        }catch (Exception e){
+            Helper.showMessage("Something Wrong", this);
+        }
+    }
+
+    public void updatePersonalItemList(){
+        try{
+            FileOutputStream fos = openFileOutput("PersonalItemList.txt", MODE_PRIVATE);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(personalItemList);
             oos.close();
         }catch (Exception e){
             Helper.showMessage("Something Wrong", this);

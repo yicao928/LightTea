@@ -6,22 +6,29 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.a155337.lighttea.Activity.MainActivity.memberList;
+import static com.a155337.lighttea.Activity.MainActivity.personalItemList;
 
 public class Bill implements Serializable {
     public Date date;
     private float total;
     private String paidPerson;
     private ArrayList<com.a155337.lighttea.Object.PersonalItem> personalItems;
+    private ArrayList<String> personalItemID;
 
-    public Bill(String paidPerson, float total, Date date, ArrayList<PersonalItem> personalItems){
+
+    public Bill(String paidPerson, float total, Date date, ArrayList<String> personalItemID){
         this.paidPerson = paidPerson;
         this.total = total;
         this.date = date;
-        this.personalItems = personalItems;
+        this.personalItemID = personalItemID;
+        personalItems = new ArrayList<>();
+        for(String i: personalItemID){
+            personalItems.add(personalItemList.findPersonalItemByID(i));
+        }
     }
 
-    public void replacePersonItem(int position, PersonalItem newPersonalItem){
-        PersonalItem oldPersonalItem = personalItems.get(position);
+    public void replacePersonItem(String personalItemID, PersonalItem newPersonalItem){
+        PersonalItem oldPersonalItem = personalItemList.findPersonalItemByID(personalItemID);
         oldPersonalItem.setName(newPersonalItem.getName());
         oldPersonalItem.setPersonalTotal(newPersonalItem.getPersonalTotal());
     }
@@ -60,8 +67,14 @@ public class Bill implements Serializable {
     }
 
     public ArrayList<PersonalItem> getPersonalItems(){
-        return personalItems;
+        ArrayList<PersonalItem> result = new ArrayList<>();
+        for(String i: personalItemID){
+            result.add(personalItemList.findPersonalItemByID(i));
+        }
+        return result;
     }
+
+    public ArrayList<String> getPersonalItemID(){return personalItemID;}
 
     public void setTotal(float newttotal){
         total = newttotal;

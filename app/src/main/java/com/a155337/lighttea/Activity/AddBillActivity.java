@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static com.a155337.lighttea.Activity.MainActivity.memberList;
+import static com.a155337.lighttea.Activity.MainActivity.personalItemList;
 
 public class AddBillActivity extends AppCompatActivity {
-    private ArrayList<PersonalItem> personalItemList;
     private Button addPersonalButton;
     private Button addBillButton;
     private EditText totalEditText;
@@ -34,9 +34,11 @@ public class AddBillActivity extends AppCompatActivity {
     private ListView personalItemListView;
     private PersonalItemAdapter adapter;
 
+    private ArrayList<PersonalItem> personalItemListThis;
     private String[] nameList;
     private Bill newBill;
     private float personalItemTotal;
+    private ArrayList<String> personalItemID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,9 @@ public class AddBillActivity extends AppCompatActivity {
     }
 
     private void initViews(){
-        personalItemList = new ArrayList<PersonalItem>();
-        adapter = new PersonalItemAdapter(AddBillActivity.this, R.layout.person_item, personalItemList);
+        personalItemListThis = new ArrayList<PersonalItem>();
+        personalItemID = new ArrayList<>();
+        adapter = new PersonalItemAdapter(AddBillActivity.this, R.layout.person_item, personalItemListThis);
         personalItemListView = findViewById(R.id.personalItemListView);
         personalItemListView.setAdapter(adapter);
 
@@ -74,7 +77,9 @@ public class AddBillActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(Helper.isFloat(amountEditText.getText().toString())){
                     PersonalItem newPersonalItem = new PersonalItem(nameSpinner.getSelectedItem().toString(), amountEditText.getText().toString());
+                    personalItemID.add(newPersonalItem.getID());
                     personalItemList.add(newPersonalItem);
+                    personalItemListThis.add(personalItemList.findPersonalItemByID(newPersonalItem.getID()));
                     personalItemListView.setAdapter(adapter);
                     personalItemTotal = personalItemTotal + newPersonalItem.getPersonalTotal();
                 }
@@ -107,7 +112,7 @@ public class AddBillActivity extends AppCompatActivity {
             }
             String paidPerson = paidPersonSpinner.getSelectedItem().toString();
             Date date = new Date(System.currentTimeMillis());
-            newBill = new Bill(paidPerson, total, date, personalItemList);
+            newBill = new Bill(paidPerson, total, date, personalItemID);
             return true;
         }
         else{

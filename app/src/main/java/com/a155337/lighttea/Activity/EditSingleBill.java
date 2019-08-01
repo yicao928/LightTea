@@ -24,9 +24,10 @@ import java.util.Date;
 
 import static com.a155337.lighttea.Activity.MainActivity.billList;
 import static com.a155337.lighttea.Activity.MainActivity.memberList;
+import static com.a155337.lighttea.Activity.MainActivity.personalItemList;
+
 //reutrn  a new bill to replace the old bill
 public class EditSingleBill extends AppCompatActivity {
-    private ArrayList<PersonalItem> personalItemList;
     private Button editBillButton;
     private EditText totalEditText;
     private Spinner paidPersonSpinner;
@@ -36,6 +37,9 @@ public class EditSingleBill extends AppCompatActivity {
     private String[] nameList;
     private Bill newBill;
     private float personalItemTotal;
+    private ArrayList<PersonalItem> personalItemListThis;
+    private ArrayList<String> personalItemID;
+    private String editID;
 
     private Bill billToEdit;
     int positionToEdit;
@@ -52,8 +56,13 @@ public class EditSingleBill extends AppCompatActivity {
     }
 
     private void initViews(){
-        personalItemList = billToEdit.getPersonalItems();
-        adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemList);
+        editID = null;
+        personalItemID = billToEdit.getPersonalItemID();
+        personalItemListThis = new ArrayList<>();
+        for(String i: personalItemID){
+            personalItemListThis.add(personalItemList.findPersonalItemByID(i));
+        }
+        adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemListThis);
         personalItemListView = findViewById(R.id.personalItemListView);
         personalItemListView.setAdapter(adapter);
 
@@ -89,6 +98,7 @@ public class EditSingleBill extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 positionToEdit = position;
                 PersonalItem personalItemToEdit = billToEdit.getPersonalItems().get(position);
+                editID = personalItemToEdit.getID();
                 Intent intent = new Intent(EditSingleBill.this, EditSinglePersonalItem.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constant.PERSONAL_TO_EDIT, personalItemToEdit);
@@ -107,7 +117,7 @@ public class EditSingleBill extends AppCompatActivity {
             }
             String paidPerson = paidPersonSpinner.getSelectedItem().toString();
             Date date = billToEdit.date;
-            newBill = new Bill(paidPerson, total, date, personalItemList);
+            newBill = new Bill(paidPerson, total, date, personalItemID);
             return true;
         }
         else{
@@ -119,9 +129,10 @@ public class EditSingleBill extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         Bundle bundle = data.getExtras();
         PersonalItem newPersonalItem = (PersonalItem)bundle.getSerializable(Constant.PERSONAL_TO_EDIT);
-        billToEdit.replacePersonItem(positionToEdit, newPersonalItem);
+        billToEdit.replacePersonItem(editID, newPersonalItem);
+        personalItemListThis = billToEdit.getPersonalItems();
 
-        adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemList);
+        adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemListThis);
         personalItemListView.setAdapter(adapter);
     }
 }
