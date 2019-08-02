@@ -97,11 +97,10 @@ public class EditSingleBill extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 positionToEdit = position;
-                PersonalItem personalItemToEdit = billToEdit.getPersonalItems().get(position);
-                editID = personalItemToEdit.getID();
+                editID = billToEdit.getPersonalItemID().get(position);
                 Intent intent = new Intent(EditSingleBill.this, EditSinglePersonalItem.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.PERSONAL_TO_EDIT, personalItemToEdit);
+                bundle.putString(Constant.PERSONAL_TO_EDIT, editID);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, Constant.NEW_EDIT_PERSONAL_ITEM);
             }

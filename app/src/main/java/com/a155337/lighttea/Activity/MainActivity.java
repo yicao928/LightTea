@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 billList.increaseTotalBy(newBill.getFloatTotal());
                 totalSpending.setText(String.valueOf(billList.getTotal()));
                 updateBillList();
+                updatePersonalItemList();
                 Helper.showMessage("Success", MainActivity.this);
                 break;
             case Constant.REQUEST_NEW_Member:
