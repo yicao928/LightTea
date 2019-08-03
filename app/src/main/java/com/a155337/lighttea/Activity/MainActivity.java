@@ -125,7 +125,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, ViewMembers.class);
             startActivity(intent);
         } else if (id == R.id.nav_tools) {
-
+            billList = new BillList();
+            personalItemList = new PersonalItemList();
+            updateBillList();
+            updateTotal();
+            updatePersonalItemList();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
