@@ -29,6 +29,7 @@ import static com.a155337.lighttea.Activity.MainActivity.personalItemList;
 //reutrn  a new bill to replace the old bill
 public class EditSingleBill extends AppCompatActivity {
     private Button editBillButton;
+    private Button deleteBillButton;
     private EditText totalEditText;
     private Spinner paidPersonSpinner;
     private ListView personalItemListView;
@@ -75,7 +76,7 @@ public class EditSingleBill extends AppCompatActivity {
         totalEditText.setText(String.valueOf(billToEdit.getFloatTotal()));
 
         editBillButton = findViewById(R.id.editBillButton);
-
+        deleteBillButton = findViewById(R.id.deleteBillButton);
     }
 
     private void setOnClickerListener(){
@@ -90,6 +91,16 @@ public class EditSingleBill extends AppCompatActivity {
                     setResult(Constant.NEW_EDIT_BILL, result);
                     finish();
                 }
+            }
+        });
+
+        deleteBillButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                setResult(Constant.DELETE_BILL);
+                adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemListThis);
+                personalItemListView.setAdapter(adapter);
+                finish();
             }
         });
 
@@ -126,12 +137,20 @@ public class EditSingleBill extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        Bundle bundle = data.getExtras();
-        PersonalItem newPersonalItem = (PersonalItem)bundle.getSerializable(Constant.PERSONAL_TO_EDIT);
-        billToEdit.replacePersonItem(editID, newPersonalItem);
-        personalItemListThis = billToEdit.getPersonalItems();
+        switch (resultCode){
+            case Constant.NEW_EDIT_PERSONAL_ITEM:
+                Bundle bundle = data.getExtras();
+                PersonalItem newPersonalItem = (PersonalItem)bundle.getSerializable(Constant.PERSONAL_TO_EDIT);
+                billToEdit.replacePersonItem(editID, newPersonalItem);
+                personalItemListThis = billToEdit.getPersonalItems();
 
-        adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemListThis);
-        personalItemListView.setAdapter(adapter);
+                adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemListThis);
+                personalItemListView.setAdapter(adapter);
+                break;
+            case Constant.DELETE_PERSONAL_ITEM:
+                personalItemList.remove(editID);
+                billToEdit.deletePersonalItem(editID);
+                break;
+        }
     }
 }

@@ -85,13 +85,7 @@ public class Bill implements Serializable {
 
     public void setPersonalItemID(ArrayList<String> newPersonalItemID){personalItemID = newPersonalItemID;}
 
-    public void updatePersonalItem(){
-        ArrayList<PersonalItem> personalItems = new ArrayList<>();
-        for(String i: personalItemID){
-            personalItems.add(personalItemList.findPersonalItemByID(i));
-        }
-        for(String i: personalItemID){
-            personalItems.add(personalItemList.findPersonalItemByID(i));
-        }
+    public void deletePersonalItem(String id){
+        personalItemID.remove(id);
     }
 }

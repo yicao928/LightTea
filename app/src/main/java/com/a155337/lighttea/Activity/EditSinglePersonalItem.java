@@ -19,6 +19,7 @@ import static com.a155337.lighttea.Activity.MainActivity.personalItemList;
 public class EditSinglePersonalItem extends AppCompatActivity {
     private Spinner nameSpinner;
     private Button editPersonalButton;
+    private Button deletePersonalItemButton;
     private EditText amountEditText;
 
     private String[] nameList;
@@ -54,6 +55,7 @@ public class EditSinglePersonalItem extends AppCompatActivity {
         amountEditText.setText(String.valueOf(personalItemToEdit.getPersonalTotal()));
 
         editPersonalButton = findViewById(R.id.editPersonalButton);
+        deletePersonalItemButton = findViewById(R.id.deletePersonalItemButton);
     }
 
     private void setOnClickListener(){
@@ -66,6 +68,14 @@ public class EditSinglePersonalItem extends AppCompatActivity {
                 bundle.putSerializable(Constant.PERSONAL_TO_EDIT, newPersonalItem);
                 intent.putExtras(bundle);
                 setResult(Constant.NEW_EDIT_PERSONAL_ITEM, intent);
+                finish();
+            }
+        });
+
+        deletePersonalItemButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                setResult(Constant.DELETE_PERSONAL_ITEM);
                 finish();
             }
         });

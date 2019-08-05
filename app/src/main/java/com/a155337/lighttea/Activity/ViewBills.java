@@ -47,13 +47,23 @@ public class ViewBills extends AppCompatActivity {
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        Bill newBill = (Bill)data.getExtras().getSerializable(Constant.NEW_BILL);
-        billList.replace(positionToEdit, newBill);
+        switch (resultCode){
+            case Constant.NEW_EDIT_BILL:
+                Bill newBill = (Bill)data.getExtras().getSerializable(Constant.NEW_BILL);
+                billList.replace(positionToEdit, newBill);
 
-        adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, billList.getAllBills());
-        allBillsList.setAdapter(adapter);
-        MainActivity.updateTotal();
-        returnResult = Constant.UPDATE_BILL_LIST;
+                adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, billList.getAllBills());
+                allBillsList.setAdapter(adapter);
+                MainActivity.updateTotal();
+                returnResult = Constant.UPDATE_BILL_LIST;
+
+                break;
+            case Constant.DELETE_BILL:
+                billList.remove(positionToEdit);
+                adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, billList.getAllBills());
+                allBillsList.setAdapter(adapter);
+                break;
+        }
     }
 
     @Override

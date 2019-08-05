@@ -16,6 +16,10 @@ public class BillList implements Serializable {
         allBills.add(newBill);
     }
 
+    public void remove(int position){
+        allBills.remove(position);
+    }
+
     public ArrayList<Bill> getAllBills(){
         return allBills;
     }
