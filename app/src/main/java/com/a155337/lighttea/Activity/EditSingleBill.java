@@ -57,15 +57,10 @@ public class EditSingleBill extends AppCompatActivity {
     }
 
     private void initViews(){
+        personalItemListView = findViewById(R.id.personalItemListView);
         editID = null;
         personalItemID = billToEdit.getPersonalItemID();
-        personalItemListThis = new ArrayList<>();
-        for(String i: personalItemID){
-            personalItemListThis.add(personalItemList.findPersonalItemByID(i));
-        }
-        adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemListThis);
-        personalItemListView = findViewById(R.id.personalItemListView);
-        personalItemListView.setAdapter(adapter);
+        updatePersonalItemListThis();
 
         nameList = memberList.getNameList();
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, nameList);
@@ -150,7 +145,17 @@ public class EditSingleBill extends AppCompatActivity {
             case Constant.DELETE_PERSONAL_ITEM:
                 personalItemList.remove(editID);
                 billToEdit.deletePersonalItem(editID);
+                updatePersonalItemListThis();
                 break;
         }
+    }
+
+    private void updatePersonalItemListThis(){
+        personalItemListThis = new ArrayList<>();
+        for(String i: personalItemID){
+            personalItemListThis.add(personalItemList.findPersonalItemByID(i));
+        }
+        adapter = new PersonalItemAdapter(EditSingleBill.this, R.layout.person_item, personalItemListThis);
+        personalItemListView.setAdapter(adapter);
     }
 }

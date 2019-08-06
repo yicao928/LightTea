@@ -36,6 +36,13 @@ public class BillList implements Serializable {
         return allBills.get(index);
     }
 
+    public void calculateBillListTotal(){
+        total = 0.0f;
+        for(Bill i: allBills){
+            total = total + i.getFloatTotal();
+        }
+    }
+
     public void replace(int position, Bill newBill){
         Bill oldBill = allBills.get(position);
         oldBill.setTotal(newBill.getFloatTotal());

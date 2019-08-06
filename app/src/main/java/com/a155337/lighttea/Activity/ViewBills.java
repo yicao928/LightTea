@@ -60,8 +60,11 @@ public class ViewBills extends AppCompatActivity {
                 break;
             case Constant.DELETE_BILL:
                 billList.remove(positionToEdit);
+                billList.calculateBillListTotal();
                 adapter = new SingleBillAdapter(ViewBills.this, R.layout.single_bill_when_view, billList.getAllBills());
                 allBillsList.setAdapter(adapter);
+                MainActivity.updateTotal();
+                returnResult = Constant.UPDATE_BILL_LIST;
                 break;
         }
     }

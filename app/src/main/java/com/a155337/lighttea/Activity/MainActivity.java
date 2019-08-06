@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case Constant.UPDATE_BILL_LIST:
                 updateBillList();
+                updatePersonalItemList();
                 updateTotal();
                 break;
 
@@ -246,10 +247,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public static void updateTotal(){
-        float newTotal = 0;
-        for(Bill i: billList.getAllBills()){
-            newTotal = newTotal + i.getFloatTotal();
-        }
+        float newTotal = billList.getTotal();
         totalSpending.setText(String.valueOf(newTotal));
         settings.edit().putFloat(Constant.TOTAL_SPEDNING, newTotal).commit();
     }
