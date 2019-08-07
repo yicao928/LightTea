@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/totalTextView"
-        android:layout_width="120dp"
+        android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_weight="1"
         android:text="Total"
@@ -30,13 +30,14 @@
 
     <TextView
         android:id="@+id/payerTextView"
-        android:layout_width="140dp"
+        android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_weight="1"
         android:text="Payer"
         android:textColor="@color/black"
         android:textSize="21sp"
-        app:layout_constraintStart_toEndOf="@+id/totalTextView" />
+        app:layout_constraintStart_toEndOf="@+id/totalTextView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/allBillsList"
