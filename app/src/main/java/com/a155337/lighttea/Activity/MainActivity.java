@@ -112,13 +112,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // View all bill!!!!!
-            //TODO
             Intent intent = new Intent(MainActivity.this, ViewBills.class);
             startActivityForResult(intent, Constant.UPDATE_BILL_LIST);
         } else if (id == R.id.nav_gallery) {
-            //Add new member!!!!!
-            //TODO
             Intent intent = new Intent(MainActivity.this, AddMember.class);
             startActivityForResult(intent, Constant.REQUEST_NEW_Member);
         } else if (id == R.id.nav_slideshow) {
