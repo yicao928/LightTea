@@ -121,15 +121,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, ViewMembers.class);
             startActivity(intent);
         } else if (id == R.id.nav_tools) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
             billList = new BillList();
             personalItemList = new PersonalItemList();
             updateBillList();
             updateTotal();
             updatePersonalItemList();
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             ois = new ObjectInputStream(fis);
             personalItemList = (PersonalItemList) ois.readObject();
             ois.close();
+            billList.assignBalanceForAll();
         }catch (Exception e){
             Helper.showMessage("Init Fail", this);
         }
@@ -199,6 +200,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 totalSpending.setText(String.valueOf(billList.getTotal()));
                 updateBillList();
                 updatePersonalItemList();
+                memberList.clearBalance();
+                billList.assignBalanceForAll();
                 Helper.showMessage("Success", MainActivity.this);
                 break;
             case Constant.REQUEST_NEW_Member:
@@ -208,12 +211,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Member newMember = (Member)bundle.getSerializable("new member");
                 memberList.add(newMember);
                 updateMemberList();
+                memberList.clearBalance();
+                billList.assignBalanceForAll();
                 Helper.showMessage("Success", MainActivity.this);
                 break;
             case Constant.UPDATE_BILL_LIST:
                 updateBillList();
                 updatePersonalItemList();
                 updateTotal();
+                billList.assignBalanceForAll();
                 break;
 
         }

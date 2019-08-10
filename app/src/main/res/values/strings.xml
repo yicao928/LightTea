@@ -10,7 +10,7 @@
     <string name="menu_home">View Bills</string>
     <string name="menu_gallery">Add Member</string>
     <string name="menu_slideshow">View Members</string>
-    <string name="menu_tools">Clear All Bills</string>
+    <string name="menu_tools">TODO</string>
     <string name="menu_share">TODO</string>
-    <string name="menu_send">TODO</string>
+    <string name="menu_send">Clear All Bills</string>
 </resources>
