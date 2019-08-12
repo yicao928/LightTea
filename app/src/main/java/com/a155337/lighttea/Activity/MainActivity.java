@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        settings = getSharedPreferences("com.a155337.tryfunctions", MODE_PRIVATE);
+        settings = getSharedPreferences("com.a155337.lighttea", MODE_PRIVATE);
         if(firstRun()){
             firstTimeInit();
         }
@@ -164,8 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
         if(firstRun())
             firstTimeInit();
-        dateTextView.setText(settings.getString(Constant.FIRST_DATE, "00-00-00"));
-        totalSpending.setText(String.valueOf(settings.getFloat(Constant.TOTAL_SPEDNING, 0.0f)));
+
         memberList = new MemberList();
         billList = new BillList();
         personalItemList = new PersonalItemList();
@@ -178,12 +177,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             billList = (BillList) ois.readObject();
             fis = openFileInput("PersonalItemList.txt");
             ois = new ObjectInputStream(fis);
+            fis = openFileInput("Total.txt");
             personalItemList = (PersonalItemList) ois.readObject();
             ois.close();
             billList.assignBalanceForAll();
         }catch (Exception e){
             Helper.showMessage("Init Fail", this);
         }
+        dateTextView.setText(settings.getString(Constant.FIRST_DATE, "00-00-00"));
+        totalSpending.setText(String.valueOf(billList.getTotal()));
     }
 
     @Override
@@ -238,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         updateMemberList();
         updateBillList();
         updatePersonalItemList();
+        Helper.showMessage("Welcome", this);
     }
 
     private boolean firstRun() {
@@ -251,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static void updateTotal(){
         float newTotal = billList.getTotal();
         totalSpending.setText(String.valueOf(newTotal));
-        settings.edit().putFloat(Constant.TOTAL_SPEDNING, newTotal).commit();
     }
 
     public void updateMemberList(){
