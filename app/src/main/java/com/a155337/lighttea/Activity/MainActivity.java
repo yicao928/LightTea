@@ -30,6 +30,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -314,7 +315,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void updatePieChart(){
         ArrayList<PieEntry> entries = new ArrayList<>();
         entries.add(new PieEntry(billList.getTotal()));
+//        entries.add(new PieEntry(204));
         PieDataSet dataSet = new PieDataSet(entries, "Total");
+//        ArrayList<Integer> colors = new ArrayList<>();
+//
+//        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+//            colors.add(c);
+//
+//        for (int c : ColorTemplate.JOYFUL_COLORS)
+//            colors.add(c);
+//        colors.add(ColorTemplate.getHoloBlue());
+//
+//        dataSet.setColors(colors);
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
     }

@@ -13,6 +13,7 @@ public class Bill implements Serializable {
     private float total;
     private String paidPerson;
     private ArrayList<String> personalItemID;
+    private String category;
 
 
     public Bill(String paidPerson, float total, Date date, ArrayList<String> personalItemID){
