@@ -2,6 +2,7 @@ package com.a155337.lighttea.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
@@ -25,12 +26,17 @@ import com.a155337.lighttea.Object.MemberList;
 import com.a155337.lighttea.Object.PersonalItem;
 import com.a155337.lighttea.Object.PersonalItemList;
 import com.a155337.lighttea.R;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static TextView totalSpending;
     private Button addBillButton;
     private Button settleBillsButton;
+    private PieChart pieChart;
 
     public static BillList billList;
     public static MemberList memberList;
@@ -177,7 +184,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             billList = (BillList) ois.readObject();
             fis = openFileInput("PersonalItemList.txt");
             ois = new ObjectInputStream(fis);
-            fis = openFileInput("Total.txt");
             personalItemList = (PersonalItemList) ois.readObject();
             ois.close();
             billList.assignBalanceForAll();
@@ -186,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         dateTextView.setText(settings.getString(Constant.FIRST_DATE, "00-00-00"));
         totalSpending.setText(String.valueOf(billList.getTotal()));
+        initPieChart();
     }
 
     @Override
@@ -204,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 updatePersonalItemList();
                 memberList.clearBalance();
                 billList.assignBalanceForAll();
+                updatePieChart();
                 Helper.showMessage("Success", MainActivity.this);
                 break;
             case Constant.REQUEST_NEW_Member:
@@ -222,6 +230,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 updatePersonalItemList();
                 updateTotal();
                 billList.assignBalanceForAll();
+                updatePieChart();
                 break;
 
         }
@@ -287,5 +296,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }catch (Exception e){
             Helper.showMessage("Something Wrong", this);
         }
+    }
+
+    private void initPieChart(){
+        pieChart = findViewById(R.id.pieChart);
+        pieChart.setData(getChartData());
+    }
+
+    private PieData getChartData(){
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(billList.getTotal()));
+        PieDataSet dataSet = new PieDataSet(entries, "Total");
+        PieData data = new PieData(dataSet);
+        return data;
+    }
+
+    private void updatePieChart(){
+        ArrayList<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(billList.getTotal()));
+        PieDataSet dataSet = new PieDataSet(entries, "Total");
+        PieData data = new PieData(dataSet);
+        pieChart.setData(data);
     }
 }
