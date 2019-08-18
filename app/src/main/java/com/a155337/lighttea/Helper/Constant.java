@@ -1,9 +1,5 @@
 package com.a155337.lighttea.Helper;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Constant {
     public static final String FIRST_RUN = "first run";
     public static final String TOTAL_SPEDNING = "total spending";
@@ -19,5 +15,5 @@ public class Constant {
     public static final int UPDATE_BILL_LIST = 6;
     public static final int DELETE_BILL = 7;
     public static final int DELETE_PERSONAL_ITEM = 8;
-    public static final ArrayList<String> category = new ArrayList<String>(Arrays.asList("dining", "transportation", "home", "health", "other"));
+    public static final String[] category = new String[]{"dining", "transportation", "home", "health", "other"};
 }

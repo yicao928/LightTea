@@ -39,6 +39,8 @@ import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView dateTextView;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static MemberList memberList;
     public static PersonalItemList personalItemList;
     private String firstDate;
+    ArrayList<Integer> colors;
 
 
     private static SharedPreferences settings;
@@ -301,32 +304,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initPieChart(){
         pieChart = findViewById(R.id.pieChart);
+        colors = new ArrayList<>();
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
         pieChart.setData(getChartData());
     }
 
     private PieData getChartData(){
+        HashMap<String, Float> categoryTotal = billList.getCategoryTotal();
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(billList.getTotal()));
+        for(Map.Entry<String, Float> i: categoryTotal.entrySet()){
+            entries.add(new PieEntry(i.getValue()));
+        }
         PieDataSet dataSet = new PieDataSet(entries, "Total");
+        dataSet.setColors(colors);
         PieData data = new PieData(dataSet);
         return data;
     }
 
     private void updatePieChart(){
+        HashMap<String, Float> categoryTotal = billList.getCategoryTotal();
         ArrayList<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(billList.getTotal()));
-//        entries.add(new PieEntry(204));
+        for(Map.Entry<String, Float> i: categoryTotal.entrySet()){
+            entries.add(new PieEntry(i.getValue()));
+        }
         PieDataSet dataSet = new PieDataSet(entries, "Total");
-//        ArrayList<Integer> colors = new ArrayList<>();
-//
-//        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-//            colors.add(c);
-//
-//        for (int c : ColorTemplate.JOYFUL_COLORS)
-//            colors.add(c);
-//        colors.add(ColorTemplate.getHoloBlue());
-//
-//        dataSet.setColors(colors);
+        dataSet.setColors(colors);
         PieData data = new PieData(dataSet);
         pieChart.setData(data);
     }

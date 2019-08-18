@@ -13,4 +13,12 @@
     <string name="menu_tools">TODO</string>
     <string name="menu_share">TODO</string>
     <string name="menu_send">Clear All Bills</string>
+
+    <string-array name="category">
+        <item>dining</item>
+        <item>transportation</item>
+        <item>home</item>
+        <item>health</item>
+        <item>other</item>
+    </string-array>
 </resources>

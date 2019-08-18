@@ -89,4 +89,6 @@ public class Bill implements Serializable {
     public void deletePersonalItem(String id){
         personalItemID.remove(id);
     }
+
+    public String getCategory(){return category;}
 }

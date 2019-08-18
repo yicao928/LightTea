@@ -1,7 +1,9 @@
 package com.a155337.lighttea.Object;
 
+import com.a155337.lighttea.Helper.Constant;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BillList implements Serializable {
     private ArrayList<Bill> allBills;
@@ -30,6 +32,18 @@ public class BillList implements Serializable {
 
     public float getTotal(){
         return total;
+    }
+
+    public HashMap<String, Float> getCategoryTotal(){
+        HashMap<String, Float> result = new HashMap<>();
+        for(String s: Constant.category){
+            result.put(s, 0.0f);
+        }
+        for(Bill i: allBills){
+            String category = i.getCategory();
+            result.put(category, result.get(category) + i.getFloatTotal());
+        }
+        return result;
     }
 
     public Bill getBill(int index){
