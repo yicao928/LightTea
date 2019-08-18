@@ -35,10 +35,31 @@
                 android:hint="total"
                 android:textColor="@color/darkGray"
                 android:textSize="27sp"
-                app:layout_constraintBottom_toTopOf="@+id/paidPersonTextView"
+                app:layout_constraintBottom_toTopOf="@+id/categoryTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/totalTextView"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/categoryTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:text="Category:"
+                android:textColor="@color/black"
+                android:textSize="27sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/totalTextView" />
+
+            <Spinner
+                android:id="@+id/categorySpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/categoryTextView"
+                app:layout_constraintTop_toTopOf="@+id/categoryTextView" />
 
             <TextView
                 android:id="@+id/paidPersonTextView"
@@ -50,16 +71,16 @@
                 android:textColor="@color/black"
                 android:textSize="27sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/totalTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/categoryTextView" />
 
             <Spinner
                 android:id="@+id/paidPersonSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/paidPersonTextView"
-                app:layout_constraintTop_toBottomOf="@+id/totalTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/categoryTextView" />
 
             <TextView
                 android:id="@+id/personalItemTextView"

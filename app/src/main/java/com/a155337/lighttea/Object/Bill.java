@@ -16,8 +16,9 @@ public class Bill implements Serializable {
     private String category;
 
 
-    public Bill(String paidPerson, float total, Date date, ArrayList<String> personalItemID){
+    public Bill(String paidPerson, String category, float total, Date date, ArrayList<String> personalItemID){
         this.paidPerson = paidPerson;
+        this.category = category;
         this.total = total;
         this.date = date;
         this.personalItemID = personalItemID;

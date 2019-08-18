@@ -1,6 +1,7 @@
 package com.a155337.lighttea.Activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +30,7 @@ public class AddBillActivity extends AppCompatActivity {
     private Button addBillButton;
     private EditText totalEditText;
     private EditText amountEditText;
+    private Spinner categorySpinner;
     private Spinner paidPersonSpinner;
     private Spinner nameSpinner;
     private ListView personalItemListView;
@@ -36,9 +38,12 @@ public class AddBillActivity extends AppCompatActivity {
 
     private ArrayList<PersonalItem> personalItemListThis;
     private String[] nameList;
+    private String[] categories;
     private Bill newBill;
     private float personalItemTotal;
     private ArrayList<String> personalItemID;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,11 @@ public class AddBillActivity extends AppCompatActivity {
         adapter = new PersonalItemAdapter(AddBillActivity.this, R.layout.person_item, personalItemListThis);
         personalItemListView = findViewById(R.id.personalItemListView);
         personalItemListView.setAdapter(adapter);
+
+        categories = Constant.category;
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, categories);
+        categorySpinner = findViewById(R.id.categorySpinner);
+        categorySpinner.setAdapter(categoryAdapter);
 
         nameList = memberList.getNameList();
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, nameList);
@@ -110,9 +120,10 @@ public class AddBillActivity extends AppCompatActivity {
                 Helper.showMessage("Person item total is greater than bill total", AddBillActivity.this);
                 return false;
             }
+            String category = categorySpinner.getSelectedItem().toString();
             String paidPerson = paidPersonSpinner.getSelectedItem().toString();
             Date date = new Date(System.currentTimeMillis());
-            newBill = new Bill(paidPerson, total, date, personalItemID);
+            newBill = new Bill(paidPerson, category, total, date, personalItemID);
             return true;
         }
         else{
