@@ -31,6 +31,7 @@ public class EditSingleBill extends AppCompatActivity {
     private Button editBillButton;
     private Button deleteBillButton;
     private EditText totalEditText;
+    private Spinner categorySpinner;
     private Spinner paidPersonSpinner;
     private ListView personalItemListView;
     private PersonalItemAdapter adapter;
@@ -41,6 +42,7 @@ public class EditSingleBill extends AppCompatActivity {
     private ArrayList<PersonalItem> personalItemListThis;
     private ArrayList<String> personalItemID;
     private String editID;
+    private String[] categories;
 
     private Bill billToEdit;
     int positionToEdit;
@@ -61,6 +63,11 @@ public class EditSingleBill extends AppCompatActivity {
         editID = null;
         personalItemID = billToEdit.getPersonalItemID();
         updatePersonalItemListThis();
+
+        categories = Constant.category;
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, categories);
+        categorySpinner = findViewById(R.id.categorySpinner);
+        categorySpinner.setAdapter(categoryAdapter);
 
         nameList = memberList.getNameList();
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, nameList);
@@ -120,9 +127,10 @@ public class EditSingleBill extends AppCompatActivity {
                 Helper.showMessage("Person item total is greater than bill total", EditSingleBill.this);
                 return false;
             }
+            String category = categorySpinner.getSelectedItem().toString();
             String paidPerson = paidPersonSpinner.getSelectedItem().toString();
             Date date = billToEdit.date;
-            newBill = new Bill(paidPerson, total, date, personalItemID);
+            newBill = new Bill(paidPerson, category, total, date, personalItemID);
             return true;
         }
         else{
