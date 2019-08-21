@@ -43,13 +43,7 @@ public class EditSinglePersonalItem extends AppCompatActivity {
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, nameList);
         nameSpinner = findViewById(R.id.nameSpinner);
         nameSpinner.setAdapter(nameAdapter);
-        int k= nameAdapter.getCount();
-        for(int i=0;i<k;i++){
-            if(personalItemToEdit.getName().equals(nameAdapter.getItem(i).toString())){
-                nameSpinner.setSelection(i,true);
-                break;
-            }
-        }
+        nameSpinner.setSelection(memberList.memberIndex(personalItemToEdit.getMember()));
 
         amountEditText = findViewById(R.id.amountEditText);
         amountEditText.setText(String.valueOf(personalItemToEdit.getPersonalTotal()));

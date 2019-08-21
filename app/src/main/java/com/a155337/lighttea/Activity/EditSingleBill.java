@@ -16,6 +16,7 @@ import com.a155337.lighttea.Helper.Constant;
 import com.a155337.lighttea.Helper.Helper;
 import com.a155337.lighttea.Object.Bill;
 import com.a155337.lighttea.Object.Member;
+import com.a155337.lighttea.Object.MemberList;
 import com.a155337.lighttea.Object.PersonalItem;
 import com.a155337.lighttea.R;
 
@@ -68,11 +69,13 @@ public class EditSingleBill extends AppCompatActivity {
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, categories);
         categorySpinner = findViewById(R.id.categorySpinner);
         categorySpinner.setAdapter(categoryAdapter);
+        categorySpinner.setSelection(Helper.categoryIndex(billToEdit.getCategory()));
 
         nameList = memberList.getNameList();
         ArrayAdapter<String> nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, android.R.id.text1, nameList);
         paidPersonSpinner = findViewById(R.id.paidPersonSpinner);
         paidPersonSpinner.setAdapter(nameAdapter);
+        paidPersonSpinner.setSelection(memberList.memberIndex(billToEdit.getPaidPersonMember()));
 
         totalEditText = findViewById(R.id.totalEditText);
         totalEditText.setText(String.valueOf(billToEdit.getFloatTotal()));

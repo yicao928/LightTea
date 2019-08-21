@@ -30,4 +30,12 @@ public class Helper {
         }
         return true;
     }
+
+    public static int categoryIndex(String target){
+        for(int i = 0; i < Constant.category.length; i++){
+            if(Constant.category[i].equals(target))
+                return i;
+        }
+        return -1;
+    }
 }

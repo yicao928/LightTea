@@ -51,4 +51,8 @@ public class MemberList implements Serializable {
     public List<Member> getAllMembers(){
         return allMembers;
     }
+
+    public int memberIndex(Member target){
+        return allMembers.indexOf(target);
+    }
 }
