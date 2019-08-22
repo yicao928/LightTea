@@ -169,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         settleBillsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
                 memberList.clearBalance();
                 billList.assignBalanceForAll();
             }
@@ -308,14 +307,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         colors = new ArrayList<>();
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
+//        for (int c : ColorTemplate.JOYFUL_COLORS)
+//            colors.add(c);
+//        for (int c : ColorTemplate.COLORFUL_COLORS)
+//            colors.add(c);
+//        for (int c : ColorTemplate.LIBERTY_COLORS)
+//            colors.add(c);
+//        for (int c : ColorTemplate.PASTEL_COLORS)
+//            colors.add(c);
         pieChart.setData(getChartData());
     }
 
