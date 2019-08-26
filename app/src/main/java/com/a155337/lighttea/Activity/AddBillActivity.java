@@ -1,7 +1,6 @@
 package com.a155337.lighttea.Activity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Spinner;
 import com.a155337.lighttea.Helper.Constant;
 import com.a155337.lighttea.Helper.Helper;
 import com.a155337.lighttea.Object.Bill;
-import com.a155337.lighttea.Object.Member;
 import com.a155337.lighttea.Object.PersonalItem;
 import com.a155337.lighttea.Adapter.PersonalItemAdapter;
 import com.a155337.lighttea.R;
@@ -77,7 +75,7 @@ public class AddBillActivity extends AppCompatActivity {
         amountEditText = findViewById(R.id.amountEditText);
 
         addPersonalButton = findViewById(R.id.editPersonalButton);
-        addBillButton = findViewById(R.id.editBillButton);
+        addBillButton = findViewById(R.id.viewBillButton);
 
     }
 

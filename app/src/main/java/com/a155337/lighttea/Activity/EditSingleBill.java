@@ -15,15 +15,12 @@ import com.a155337.lighttea.Adapter.PersonalItemAdapter;
 import com.a155337.lighttea.Helper.Constant;
 import com.a155337.lighttea.Helper.Helper;
 import com.a155337.lighttea.Object.Bill;
-import com.a155337.lighttea.Object.Member;
-import com.a155337.lighttea.Object.MemberList;
 import com.a155337.lighttea.Object.PersonalItem;
 import com.a155337.lighttea.R;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.a155337.lighttea.Activity.MainActivity.billList;
 import static com.a155337.lighttea.Activity.MainActivity.memberList;
 import static com.a155337.lighttea.Activity.MainActivity.personalItemList;
 
@@ -80,7 +77,7 @@ public class EditSingleBill extends AppCompatActivity {
         totalEditText = findViewById(R.id.totalEditText);
         totalEditText.setText(String.valueOf(billToEdit.getFloatTotal()));
 
-        editBillButton = findViewById(R.id.editBillButton);
+        editBillButton = findViewById(R.id.viewBillButton);
         deleteBillButton = findViewById(R.id.deleteBillButton);
     }
 

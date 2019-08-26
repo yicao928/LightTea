@@ -7,9 +7,9 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">View Bills</string>
+    <string name="menu_home">TODO</string>
     <string name="menu_gallery">Add Member</string>
-    <string name="menu_slideshow">View Members</string>
+    <string name="menu_slideshow">TODO</string>
     <string name="menu_tools">TODO</string>
     <string name="menu_share">TODO</string>
     <string name="menu_send">Clear All Bills</string>

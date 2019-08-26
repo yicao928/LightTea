@@ -2,8 +2,8 @@ package com.a155337.lighttea.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,7 +23,6 @@ import com.a155337.lighttea.Object.Bill;
 import com.a155337.lighttea.Object.BillList;
 import com.a155337.lighttea.Object.Member;
 import com.a155337.lighttea.Object.MemberList;
-import com.a155337.lighttea.Object.PersonalItem;
 import com.a155337.lighttea.Object.PersonalItemList;
 import com.a155337.lighttea.R;
 import com.github.mikephil.charting.charts.PieChart;
@@ -45,8 +44,9 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TextView dateTextView;
     private static TextView totalSpending;
-    private Button addBillButton;
-    private Button settleBillsButton;
+    private Button viewBillButton;
+    private Button viewMemberButton;
+    FloatingActionButton fab;
     private PieChart pieChart;
 
     public static BillList billList;
@@ -69,13 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initViewsAndData();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//            }
-//        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -123,14 +116,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Intent intent = new Intent(MainActivity.this, ViewBills.class);
-            startActivityForResult(intent, Constant.UPDATE_BILL_LIST);
+//            Intent intent = new Intent(MainActivity.this, ViewBills.class);
+//            startActivityForResult(intent, Constant.UPDATE_BILL_LIST);
+            //TODO
         } else if (id == R.id.nav_gallery) {
             Intent intent = new Intent(MainActivity.this, AddMember.class);
             startActivityForResult(intent, Constant.REQUEST_NEW_Member);
         } else if (id == R.id.nav_slideshow) {
-            Intent intent = new Intent(MainActivity.this, ViewMembers.class);
-            startActivity(intent);
+//            Intent intent = new Intent(MainActivity.this, ViewMembers.class);
+//            startActivity(intent);
+            //TODO
         } else if (id == R.id.nav_tools) {
 
         } else if (id == R.id.nav_share) {
@@ -152,10 +147,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initViewsAndData(){
         dateTextView = findViewById(R.id.dateTextView);
         totalSpending = findViewById(R.id.totalSpending);
-        addBillButton = findViewById(R.id.editBillButton);
-        addBillButton.setOnClickListener(new View.OnClickListener() {
+
+        viewBillButton = findViewById(R.id.viewBillButton);
+        viewBillButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ViewBills.class);
+                startActivityForResult(intent, Constant.UPDATE_BILL_LIST);
+            }
+        });
+
+        viewMemberButton = findViewById(R.id.viewMemberButton);
+        viewMemberButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ViewMembers.class);
+                startActivity(intent);
+            }
+        });
+
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 if(memberList.size() != 0){
                     Intent intent = new Intent(MainActivity.this, AddBillActivity.class);
                     startActivityForResult(intent, Constant.REQUEST_NEW_BILL);
@@ -165,14 +179,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-        settleBillsButton = findViewById(R.id.settleBillsButton);
-        settleBillsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                memberList.clearBalance();
-                billList.assignBalanceForAll();
-            }
-        });
+
         if(firstRun())
             firstTimeInit();
 
@@ -307,14 +314,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         colors = new ArrayList<>();
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
-//        for (int c : ColorTemplate.JOYFUL_COLORS)
-//            colors.add(c);
-//        for (int c : ColorTemplate.COLORFUL_COLORS)
-//            colors.add(c);
-//        for (int c : ColorTemplate.LIBERTY_COLORS)
-//            colors.add(c);
-//        for (int c : ColorTemplate.PASTEL_COLORS)
-//            colors.add(c);
         pieChart.setData(getChartData());
     }
 

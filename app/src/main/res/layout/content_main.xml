@@ -53,27 +53,27 @@
         app:layout_constraintTop_toBottomOf="@+id/totalSpending" />
 
     <Button
-        android:id="@+id/editBillButton"
+        android:id="@+id/viewBillButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:text="ADD BILL"
-        app:layout_constraintEnd_toStartOf="@+id/settleBillsButton"
+        android:text="VIEW BILLS"
+        app:layout_constraintEnd_toStartOf="@+id/viewMemberButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pieChart" />
 
     <Button
-        android:id="@+id/settleBillsButton"
+        android:id="@+id/viewMemberButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:text="Settle Bills"
+        android:text="VIEW MEMBERS"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editBillButton"
+        app:layout_constraintStart_toEndOf="@+id/viewBillButton"
         app:layout_constraintTop_toBottomOf="@+id/pieChart" />
 
 </android.support.constraint.ConstraintLayout>
