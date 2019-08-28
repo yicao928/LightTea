@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,6 +31,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.joaquimley.faboptions.FabOptions;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Button viewMemberButton;
     FloatingActionButton fab;
     private PieChart pieChart;
+    FabOptions fabOptions;
 
     public static BillList billList;
     public static MemberList memberList;
@@ -176,6 +179,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 else{
                     Helper.showMessage("Please add a member first", MainActivity.this);
+                }
+            }
+        });
+
+        fabOptions = findViewById(R.id.fab_options);
+        fabOptions.setButtonsMenu(R.menu.add_menu);
+        fabOptions.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.share:
+                        Helper.showMessage("share", MainActivity.this);
+                        break;
+                    case R.id.send:
+                        Helper.showMessage("sned", MainActivity.this);
+                        break;
                 }
             }
         });
