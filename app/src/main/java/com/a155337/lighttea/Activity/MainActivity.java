@@ -123,8 +123,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            startActivityForResult(intent, Constant.UPDATE_BILL_LIST);
             //TODO
         } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(MainActivity.this, AddMember.class);
-            startActivityForResult(intent, Constant.REQUEST_NEW_Member);
+//            Intent intent = new Intent(MainActivity.this, AddMember.class);
+//            startActivityForResult(intent, Constant.REQUEST_NEW_Member);
+            //TODO
         } else if (id == R.id.nav_slideshow) {
 //            Intent intent = new Intent(MainActivity.this, ViewMembers.class);
 //            startActivity(intent);
@@ -169,19 +170,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(memberList.size() != 0){
-                    Intent intent = new Intent(MainActivity.this, AddBillActivity.class);
-                    startActivityForResult(intent, Constant.REQUEST_NEW_BILL);
-                }
-                else{
-                    Helper.showMessage("Please add a member first", MainActivity.this);
-                }
-            }
-        });
 
         fabOptions = findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.add_menu);
@@ -189,12 +177,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onClick(View v) {
+                Intent intent;
                 switch (v.getId()){
-                    case R.id.share:
-                        Helper.showMessage("share", MainActivity.this);
+                    case R.id.addMember:
+                        intent = new Intent(MainActivity.this, AddMember.class);
+                        startActivityForResult(intent, Constant.REQUEST_NEW_Member);
                         break;
-                    case R.id.send:
-                        Helper.showMessage("sned", MainActivity.this);
+                    case R.id.addBill:
+                        if(memberList.size() != 0){
+                            intent = new Intent(MainActivity.this, AddBillActivity.class);
+                            startActivityForResult(intent, Constant.REQUEST_NEW_BILL);
+                        }
+                        else{
+                            Helper.showMessage("Please add a member first", MainActivity.this);
+                        }
                         break;
                 }
             }
