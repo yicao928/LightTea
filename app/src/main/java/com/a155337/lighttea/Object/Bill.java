@@ -55,16 +55,21 @@ public class Bill implements Serializable {
 
     public void assignBalance(){
         memberList.findMemberByName(paidPerson).increaseBalance(total);
-        float totalWithoutPersonalItem = total;
+        ArrayList<String> involvedMember = new ArrayList<>();
         ArrayList<PersonalItem> personalItems = new ArrayList<>();
         for(String i: personalItemID){
             personalItems.add(personalItemList.findPersonalItemByID(i));
+            involvedMember.add((personalItemList.findPersonalItemByID(i).getName()));
         }
-        for(PersonalItem i: personalItems){
-            totalWithoutPersonalItem = totalWithoutPersonalItem - i.getPersonalTotal();
+        float totalWithoutPersonalItem = total;
+        for(PersonalItem i:personalItems){
             i.getMember().decreaseBalance(i.getPersonalTotal());
+            totalWithoutPersonalItem = totalWithoutPersonalItem - i.getPersonalTotal();
         }
-        memberList.decreaseBalanceForAll(totalWithoutPersonalItem);
+        float average = totalWithoutPersonalItem / involvedMember.size();
+        for(String i: involvedMember){
+            memberList.findMemberByName(i).decreaseBalance(average);
+        }
     }
 
     public ArrayList<PersonalItem> getPersonalItems(){
