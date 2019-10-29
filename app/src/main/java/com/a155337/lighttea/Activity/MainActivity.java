@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             updateTotal();
             updatePersonalItemList();
             updatePieChart();
+            billList.assignBalanceForAll();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
