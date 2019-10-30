@@ -35,6 +35,7 @@
                 android:hint="total"
                 android:textColor="@color/darkGray"
                 android:textSize="27sp"
+                android:inputType="numberDecimal"
                 app:layout_constraintBottom_toTopOf="@+id/categorySpinner"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/totalTextView"
